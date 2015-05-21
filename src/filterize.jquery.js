@@ -31,10 +31,10 @@ Full source at https://github.com/edezacas/Filterize
 		//Build Wrapper for Select List
 		buildWrapper: function(){
 			var select = $(this.element);
-			
+
 			select
 			.wrap('<div class="filterize-wrap"></div>')
-			.append('<option class="filterize-no_results" value="no-results">No encuentro mi calle</option>');
+			.append('<option class="filterize-no_results" value="no-results">'+this.options.titleText+'</option>');
 			
 			var parent = select.parent();
 			parent.prepend('<div class="filterize-title">Selecciona un pais</div><ul class="filterize-list"></ul>');
@@ -171,7 +171,7 @@ Full source at https://github.com/edezacas/Filterize
     };
 
     $.fn[pluginName].defaults = {
-        property: 'value',
+        titleText: 'No results matched',
         onComplete: null
     };
 
