@@ -98,22 +98,18 @@ Full source at https://github.com/edezacas/Filterize
 	
 			list.on('click','li',function(){
 				
-				var isSearchField = $(this).hasClass('filterize-list-search');
+				var val = $(this).data("value"),
+					texto = $(this).find("p").text();
+					
+				title.text(texto);
+				boxList.slideUp(400);
 				
-				if(!isSearchField){
-					var val = $(this).data("value"),
-						texto = $(this).find("p").text();
-						
-					title.text(texto);
-					boxList.slideUp(400);
+				select.val(val);
+				
+				//Trigger change event to notify
+				select.trigger("change");					
 					
-					select.val(val);
-					
-					//Force Trigger change event
-					select.trigger("change");					
-						
-					title.toggleClass('active');					
-				}
+				title.toggleClass('active');					
 	
 			});		        
 	        
