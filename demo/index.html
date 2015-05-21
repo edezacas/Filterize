@@ -34,7 +34,9 @@
 			<option>Ecuador</option>
 			<option>Canad</option>									
 		</select>
-
+		<br /><br /><br />
+		<p id="result" style="display:none;">You've selected <span id="option"></span></p>
+		
 	</div>
 	
 	
@@ -46,7 +48,9 @@
     $('.demo').filterize({
 	    titleText: "Select a country",
 	    noresultsText: "Oh I'm sorry!"
-    });
+    }).on("change", function(){
+	    $("#result").show().find("#option").text($(this).val());
+    })
     
   </script>
 
