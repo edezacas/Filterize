@@ -34,10 +34,10 @@ Full source at https://github.com/edezacas/Filterize
 
 			select
 			.wrap('<div class="filterize-wrap"></div>')
-			.append('<option class="filterize-no_results" value="no-results">'+this.options.titleText+'</option>');
+			.append('<option class="filterize-no_results" value="no-results">'+this.options.noresultsText+'</option>');
 			
 			var parent = select.parent();
-			parent.prepend('<div class="filterize-title">Selecciona un pais</div><div class="filterize-list"><ul></ul></div>');
+			parent.prepend('<div class="filterize-title">'+this.options.titleText+'</div><div class="filterize-list"><ul></ul></div>');
 		},
 		//Build Select Custom List
 		buildSelect: function(){
@@ -160,7 +160,8 @@ Full source at https://github.com/edezacas/Filterize
     };
 
     $.fn[pluginName].defaults = {
-        titleText: 'No results matched'
+        titleText: 'Select an option',
+	    noresultsText: 'No results matched'
     };
 
 })( jQuery, window, document );
