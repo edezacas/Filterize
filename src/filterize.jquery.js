@@ -37,13 +37,14 @@ Full source at https://github.com/edezacas/Filterize
 			.append('<option class="filterize-no_results" value="no-results">'+this.options.titleText+'</option>');
 			
 			var parent = select.parent();
-			parent.prepend('<div class="filterize-title">Selecciona un pais</div><ul class="filterize-list"></ul>');
+			parent.prepend('<div class="filterize-title">Selecciona un pais</div><div class="filterize-list"><ul></ul></div>');
 		},
 		//Build Select Custom List
 		buildSelect: function(){
 			var select = $(this.element),
 				parent = select.parent(),
-				list = parent.children('ul'),
+				boxList = parent.find('.filterize-list'),
+				list = parent.find('ul'),
 				title = parent.find('.filterize-title');
 										
 			title.css('min-width',title.outerWidth());			
@@ -59,13 +60,13 @@ Full source at https://github.com/edezacas/Filterize
 				list.append('<li class="'+ clase +'" data-value="' + option.val() + '"><p>'+option.text()+'</p></li>')
 			}
 	
-			list.hide().prepend('<li class="filterize-list-search"><input type="text" autocomplete="off" tabindex="1"></li>');
+			boxList.prepend('<div class="filterize-list-search"><input type="text" autocomplete="off" tabindex="1"></div>');
 			
 			select.hide();
 	
 			// open list	
 			title.on('click', function(){
-				list.slideToggle(400);
+				boxList.slideToggle(400);
 				$(this).toggleClass('active');
 			});				
 
@@ -89,7 +90,8 @@ Full source at https://github.com/edezacas/Filterize
 	        
 			var select = $(this.element),
 				parent = select.parent(),
-				list = parent.children('ul'),
+				boxList = parent.find('.filterize-list'),				
+				list = parent.find('ul'),
 				title = parent.find('.filterize-title');			        
 	        
 			// selected option
@@ -103,7 +105,7 @@ Full source at https://github.com/edezacas/Filterize
 						texto = $(this).find("p").text();
 						
 					title.text(texto);
-					list.slideUp(400);
+					boxList.slideUp(400);
 					
 					select.val(val);
 					
@@ -117,7 +119,7 @@ Full source at https://github.com/edezacas/Filterize
 	        
 			$('.filterize-list-search input').on('change', function(){ 
 			    var filter = $(this).val(),
-			    	list = 	parent.children('ul');	   
+			    	list = 	parent.find('ul');	   
 
 			    if(filter) {
 			      // this finds all links in a list that contain the input,
