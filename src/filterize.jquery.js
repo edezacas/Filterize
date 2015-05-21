@@ -150,15 +150,6 @@ Full source at https://github.com/edezacas/Filterize
 			jQuery.expr[':'].Contains = function(a,i,m){
 			    return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
 			};	        
-        },    
-
-        callback: function() {
-            // Cache onComplete option
-            var onComplete = this.options.onComplete;
-
-            if ( typeof onComplete === 'function' ) {
-                onComplete.call(this.element);
-            }
         }
 
     });
@@ -173,8 +164,7 @@ Full source at https://github.com/edezacas/Filterize
     };
 
     $.fn[pluginName].defaults = {
-        titleText: 'No results matched',
-        onComplete: null
+        titleText: 'No results matched'
     };
 
 })( jQuery, window, document );
