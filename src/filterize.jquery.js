@@ -66,7 +66,7 @@ Full source at https://github.com/edezacas/Filterize
 	
 			// open list	
 			title.on('click', function(){
-				boxList.slideToggle(400);
+				boxList.slideToggle();
 				$(this).toggleClass('active');
 			});				
 
@@ -102,7 +102,7 @@ Full source at https://github.com/edezacas/Filterize
 					texto = $(this).find("p").text();
 					
 				title.text(texto);
-				boxList.slideUp(400);
+				boxList.slideUp();
 				
 				select.val(val);
 				
@@ -115,24 +115,24 @@ Full source at https://github.com/edezacas/Filterize
 	        
 			$('.filterize-list-search input').on('change', function(){ 
 			    var filter = $(this).val(),
-			    	list = 	parent.find('ul');	   
+			    	list = 	parent.find('ul')
+			    	elNoRes = $(list).find(".filterize-no_results");	   
 
 			    if(filter) {
 			      // this finds all links in a list that contain the input,
 			      // and hide the ones not containing the input while showing the ones that do
-			      $(list).find("p:not(:Contains(" + filter + "))").parent().stop(true, false).slideUp();
-			      $(list).find("p:Contains(" + filter + ")").parent().stop(true, false).slideDown();
-			      $(list).find(".filterize-no_results").stop(true, false).slideUp(400);
+			      $(list).find("p:not(:Contains(" + filter + "))").parent().stop(true, false).hide();
+			      $(list).find("p:Contains(" + filter + ")").parent().stop(true, false).show();
+			      elNoRes.stop(true, false).hide();
 			      
 			      //No results
 			      if(!$(list).find("p:Contains(" + filter + ")").length){
-	
-				      $(list).find(".filterize-no_results").stop(true, false).slideDown(400);
+				      elNoRes.stop(true, false).show();
 			      }
 			      
 			    } else {
-					$(list).find(".filterize-no_results").stop(true, false).slideUp();				    
-					$(list).find("li:not(.filterize-no_results)").slideDown(400);
+					elNoRes.stop(true, false).hide();				    
+					$(list).find("li:not(.filterize-no_results)").show();
 			    }
 			    
 			    return false;
@@ -146,6 +146,7 @@ Full source at https://github.com/edezacas/Filterize
 			jQuery.expr[':'].Contains = function(a,i,m){
 			    return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
 			};	        
+			
         }
 
     });
