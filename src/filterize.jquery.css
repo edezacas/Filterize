@@ -9,12 +9,12 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 */
 
 
-.filterize-wrap{display: inline-block; position: relative;}
+.filterize-wrap{display: block; position: relative; width: 100%;}
 .filterize-wrap *{margin: 0;padding: 0;box-sizing: border-box;}
 
 .filterize-title{
 	cursor:pointer;
-	padding:2px 39px 3px 9px;
+	padding:9px 10px;
 	border:2px solid #e4e4e2;
 	background:#f5f7f8;
 	z-index:1;
@@ -105,10 +105,11 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 	background: #FFFFFF;
 }
 
+.filterize-list-search{padding: 3px 10px;}
 
 .filterize-list-search input{
   margin: 1px 0;
-  padding: 4px 20px 4px 5px;
+  padding: 7px 20px 7px 5px;
   display: block;
   height: auto;
   outline: 0;

@@ -93,8 +93,13 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 			var select = $(this.element),
 				parent = select.parent(),
 				boxList = parent.find('.filterize-list'),
-				list = parent.find('ul');
-										
+				list = parent.find('ul'),
+				elNoRes = select.find(".filterize-no_results");
+			
+			if(!elNoRes.length){
+				select.append('<option class="filterize-no_results" value="no-results">'+this.options.noresultsText+'</option>');
+			}
+													
 			//Empty list before rebuild again
 			list.empty();
 			
