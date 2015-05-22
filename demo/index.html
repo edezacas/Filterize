@@ -8,7 +8,8 @@
   <style>
 	  	body{font-size: 14px; font-family: sans-serif; line-height: 1.5em; padding: 50px 0;}
 	  	.wrap{max-width: 980px; margin: auto;}
-	  	
+	  	h1{font-size: 2em; font-weight: bold;}
+	  	code{font-family: monospace;}
   </style>  	
   
 </head>
@@ -20,7 +21,9 @@
 		
 		<p>Filterize is a simple jQuery plugin that improve select elements with a search input to filter list.</p><br />
 
-		
+		<p>Add some options to select list and test "<code>filterize:update</code>" event to update filterize</p>
+		<button id="test-update">Test it!</button>
+		<br /><br /><br />		
 		<select class="demo">
 			<option>Spain</option>
 			<option>Italy</option>
@@ -50,6 +53,11 @@
 	    noresultsText: "Oh I'm sorry!"
     }).on("change", function(){
 	    $("#result").show().find("#option").text($(this).val());
+    });
+    
+    
+    $('#test-update').on("click", function(){
+	    $('.demo').prepend("<option>New Country</option>").trigger("filterize:update");	    
     })
     
   </script>
