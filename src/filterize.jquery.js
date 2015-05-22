@@ -66,7 +66,7 @@ Full source at https://github.com/edezacas/Filterize
 	
 			// open list	
 			title.on('click', function(){
-				boxList.slideToggle();
+				boxList.stop(true, true).slideToggle();
 				$(this).toggleClass('active');
 			});				
 
