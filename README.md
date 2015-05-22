@@ -23,6 +23,26 @@ Filterize is a library for making select more user friendly and add a search cap
 	<option>Canad</option>									
 </select>
 
-    $('.demo').filterize();
+$('.demo').filterize();
     
+```
+
+## Options
+
+The following options are available to pass into Filterize on instantiation:
+
+```
+titleText: The text to be displayed for select list. Default: 'Select an option'
+
+noresultsText: The text to be displayed when no matching results are found. Default: 'No results matched'
+
+```
+
+Example:
+
+```
+$('.demo').filterize({
+    titleText: "Select a country",
+    noresultsText: "Oh I'm sorry!"
+});
 ```
