@@ -87,6 +87,29 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
                 plugin.update.call(plugin);
             });            
         },
+        //Update Filterize after select modificated
+        update: function() {
+
+			var select = $(this.element),
+				parent = select.parent(),
+				boxList = parent.find('.filterize-list'),
+				list = parent.find('ul');
+										
+			//Empty list before rebuild again
+			list.empty();
+			
+			for(var i = 0,len = select.children('option').length;i < len;i++){
+				var option = select.children('option').eq(i),
+					clase = option.attr("class");
+				
+				if(typeof clase == "undefined"){
+					clase = "";
+				}							
+				
+				list.append('<li class="'+ clase +'" data-value="' + option.val() + '"><p>'+option.text()+'</p></li>')
+			}							
+
+        },          
         //Search input value on list
         fireSearch: function(){
 	        
@@ -157,6 +180,7 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 				});
 			}
 			else{
+				//Fix conflict jQuery v.1.8.0
 				jQuery.expr[":"].containsIN = jQuery.expr.createPseudo(function(arg) {
 				    return function( elem ) {
 				        return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
