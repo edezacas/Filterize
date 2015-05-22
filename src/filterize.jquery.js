@@ -121,12 +121,15 @@ Full source at https://github.com/edezacas/Filterize
 			    if(filter) {
 			      // this finds all links in a list that contain the input,
 			      // and hide the ones not containing the input while showing the ones that do
-			      $(list).find("p:not(:Contains(" + filter + "))").parent().stop(true, false).hide();
-			      $(list).find("p:Contains(" + filter + ")").parent().stop(true, false).show();
-			      elNoRes.stop(true, false).hide();
+				  var matches = $(list).find('p:Contains(' + filter + ')'),
+				  	  matchesParent = matches.parent();
+				  	  
+				  $('li', list).not(matchesParent).stop(true, false).hide();
+				  matchesParent.stop(true, false).show();
+			      elNoRes.stop(true, false).hide();			     
 			      
 			      //No results
-			      if(!$(list).find("p:Contains(" + filter + ")").length){
+			      if(!matches.length){
 				      elNoRes.stop(true, false).show();
 			      }
 			      
