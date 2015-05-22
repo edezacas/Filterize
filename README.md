@@ -46,3 +46,18 @@ $('.demo').filterize({
     noresultsText: "Oh I'm sorry!"
 });
 ```
+
+## Triggerable Events
+
+You can trigger several events on the original select field to invoke a behavior in Filterize (Coming soon more).
+
+```
+filterize:update: When selected options are changed this event should be triggered to update Filterize behavior.
+
+```
+
+Example:
+
+```
+$('.demo').trigger("filterize:update");
+```
