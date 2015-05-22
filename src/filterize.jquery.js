@@ -121,7 +121,7 @@ Full source at https://github.com/edezacas/Filterize
 			    if(filter) {
 			      // this finds all links in a list that contain the input,
 			      // and hide the ones not containing the input while showing the ones that do
-				  var matches = $(list).find('p:Contains(' + filter + ')'),
+				  var matches = $(list).find('p:containsIN(' + filter + ')'),
 				  	  matchesParent = matches.parent();
 				  	  
 				  $('li', list).not(matchesParent).stop(true, false).hide();
@@ -144,12 +144,24 @@ Full source at https://github.com/edezacas/Filterize
 			    // fire the above change event after every letter
 			    $(this).change();
 			});			
-	
-			// custom css expression for a case-insensitive contains()
-			jQuery.expr[':'].Contains = function(a,i,m){
-			    return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
-			};	        
-			
+
+
+			//Make jQuery :contains Case-Insensitive		
+			if($.fn.jquery != "1.8.0"){
+				$.extend($.expr[":"], {
+					"containsIN": function(a, i, m) {
+						return (a.textContent || a.innerText || "").toLowerCase().indexOf((m[3] || "").toLowerCase()) >= 0;
+					}
+				});
+			}
+			else{
+				jQuery.expr[":"].containsIN = jQuery.expr.createPseudo(function(arg) {
+				    return function( elem ) {
+				        return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+				    };
+				});		
+			}
+		
         }
 
     });
