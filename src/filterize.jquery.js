@@ -1,9 +1,11 @@
 /*!
 Filterize, a jQuery Plugin to filter select list
-by Eduard Deza at Hiringo Team, http://hiringo.com
+by Eduard Deza for Hiringo Team, http://hiringo.com
 
 Version 1.0.0
 Full source at https://github.com/edezacas/Filterize
+
+MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 */
 
 ;(function ($, window, document, undefined) {
