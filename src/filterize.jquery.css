@@ -94,8 +94,8 @@ table {
 	right:8px;
 	top:50%;
 	margin-top:-10px;
-  background: url('icon-open.png') no-repeat 0 5px;	
-	width: 10px;
+	background: url('filterize-sprite.png') no-repeat 0 0;	
+	width: 18px;
 	height: 15px;
 }
 .filterize-title:before{
@@ -108,7 +108,7 @@ table {
 	margin-top:-6px;
 }
 .filterize-title.active:after{
-  background: url('icon-close.png') no-repeat 0 5px;	
+	background: url('filterize-sprite.png') no-repeat -16px 0;	
 }
 
 .filterize-list{
@@ -159,7 +159,7 @@ table {
   height: auto;
   outline: 0;
   border: 1px solid #aaa;
-  background: url('icon-search.png') no-repeat 98% 5px;
+  background: url('filterize-sprite.png') no-repeat 98% -18px;	
   font-size: 1em;
   font-family: sans-serif;
   line-height: normal;
