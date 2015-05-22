@@ -1,3 +1,6 @@
 # Filterize
 
-Filterize is a simple jQuery plugin that improve select elements with a search input to filter list.
+Filterize is a library for making select more user friendly and add a search capability.
+
+## Requirements
+* jQuery 1.7+
