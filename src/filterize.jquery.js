@@ -70,7 +70,17 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 			title.on('click', function(){
 				boxList.stop(true, true).slideToggle();
 				$(this).toggleClass('active');
-			});				
+			});			
+			
+			//Close list when clicking outside it
+			$(document).on('click', function(event) {
+				  if (!$(event.target).closest(parent).length) {
+					  if(boxList.is(":visible")) {
+						  boxList.stop(true, true).slideUp();
+						  title.toggleClass('active');
+				      }					  					  
+				  }
+			});			
 
 			this.fireSearch();	
 		},
