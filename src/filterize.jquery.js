@@ -59,19 +59,13 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 					clase = "";
 				}							
 				
-				list.append('<li class="'+ clase +'" data-value="' + option.val() + '"><p>'+option.text()+'</p></li>')
+				list.append('<li class="'+ clase +'" data-value="' + option.val() + '"><p>'+option.text()+'</p></li>');
 			}
 	
 			boxList.prepend('<div class="filterize-list-search"><input type="text" autocomplete="off" tabindex="1"></div>');
 			
 			select.hide();
-	
-			// open list	
-			title.on('click', function(){
-				boxList.stop(true, true).slideToggle();
-				$(this).toggleClass('active');
-			});			
-			
+				
 			//Close list when clicking outside it
 			$(document).on('click', function(event) {
 				  if (!$(event.target).closest(parent).length) {
@@ -81,29 +75,51 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 				      }					  					  
 				  }
 			});			
-
+            
 			this.fireSearch();	
 		},
         // Cache DOM nodes for performance
         buildCache: function () {
             this.$element = $(this.element);
+            this.$titleField = $(this.element).siblings('.filterize-title');
+            this.$list = $(this.element).siblings('.filterize-list');
+            this.$searchField = this.$list.find('input').first();
+            this.$currentListEle = this.getCurrentEle();
+            
         },
 
         // Bind events that trigger methods
         bindEvents: function() {
             var plugin = this;
-
+                                   
             plugin.$element.on('filterize:update'+'.'+plugin._name, function() {
                 plugin.update.call(plugin);
-            });            
+            });  
+            
+            plugin.$titleField.on('click'+'.'+plugin._name, function() {
+                plugin.toggleList.call(plugin);
+            });              
+            
+            plugin.$list.on('click'+'.'+plugin._name, "li", function() {
+                plugin.setSearchValue.call(plugin);
+            });  
+            
+            plugin.$list.on('mouseover'+'.'+plugin._name, "li" ,function(event) {
+                plugin.setListFocus.call(plugin, this);
+            });                                         
+            
+            plugin.$searchField.on('keydown'+'.'+plugin._name, function(event) {                
+                plugin.keypress_checker.call(plugin, event);
+            });                                     
+                                    
         },
         //Update Filterize after select modificated
         update: function() {
 
 			var select = $(this.element),
 				parent = select.parent(),
-				boxList = parent.find('.filterize-list'),
-				list = parent.find('ul'),
+				boxList = this.$list,
+				list = boxList.find('ul'),
 				elNoRes = select.find(".filterize-no_results");
 			
 			if(!elNoRes.length){
@@ -121,41 +137,112 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 					clase = "";
 				}							
 				
-				list.append('<li class="'+ clase +'" data-value="' + option.val() + '"><p>'+option.text()+'</p></li>')
+				list.append('<li class="'+ clase +'" data-value="' + option.val() + '"><p>'+option.text()+'</p></li>');
 			}							
 
-        },          
+        },   
+        //Bind KeyDown
+        keypress_checker: function(event){
+          
+          var stroke = event.which;
+                                            
+          switch (stroke){
+            //Enter
+            case 13:
+                this.setSearchValue();
+                break;                
+            //KeyUp
+            case 38:
+                this.setPrevEle();                            
+                break;
+            //KeyDown   
+            case 40:
+                this.setNextEle();
+                break;
+              
+          };            
+        }, 
+        
+        //Set selected class to focus el
+        setListFocus: function(el){                             
+          
+          this.removeListFocus(this.$currentListEle);          
+          
+          this.setCurrentEle(el);          
+          this.$currentListEle.addClass("selected");                                         
+        },
+        
+        //Remove selected class to old focus el
+        removeListFocus: function(el){                    
+          $(el).removeClass("selected");                                         
+        },        
+
+        //Toggle List 
+        toggleList: function(){            
+            this.$list.stop(true, true).slideToggle();
+            this.$titleField.toggleClass('active');
+                
+            this.$searchField.trigger('focus');                        
+        },    
+        
+        //Set current list value
+        setCurrentEle: function(el){          
+          this.$currentListEle = $(el);    
+          return this.$currentListEle;         
+        },
+        
+        //Get current list value
+        getCurrentEle: function() {
+            var current = this.$list.find("li.selected");
+                        
+          if(!current.length){                            
+              current = this.$list.find("li").first().addClass("selected");              
+          }
+          
+          return current;          
+        },
+        
+        //Set next element to selected
+        setNextEle: function(){
+            this.$currentListEle.removeClass("selected").blur().next().addClass("selected");
+            this.$currentListEle = this.getCurrentEle();
+        },
+        
+        //Set prev element to selected
+        setPrevEle: function(){
+            this.$currentListEle.removeClass("selected").blur().prev().addClass("selected");
+            this.$currentListEle = this.getCurrentEle();
+        },        
+        
+        //Set List Value 
+        setSearchValue: function(){
+            var val = this.$currentListEle.data("value"),
+                texto = this.$currentListEle.find("p").text();
+            
+            
+            console.log(this.$currentListEle);
+                
+            this.$titleField.text(texto);
+            this.$list.slideUp();
+            
+            this.$element.val(val);
+            
+            //Trigger change event to notify
+            this.$element.trigger("change");                   
+                
+            this.$titleField.toggleClass('active');                
+        },
         //Search input value on list
         fireSearch: function(){
 	        
 			var select = $(this.element),
-				parent = select.parent(),
-				boxList = parent.find('.filterize-list'),				
+				parent = select.parent(),		
 				list = parent.find('ul'),
-				title = parent.find('.filterize-title');			        
-	        
-			// selected option
-	
-			list.on('click','li',function(){
-				
-				var val = $(this).data("value"),
-					texto = $(this).find("p").text();
-					
-				title.text(texto);
-				boxList.slideUp();
-				
-				select.val(val);
-				
-				//Trigger change event to notify
-				select.trigger("change");					
-					
-				title.toggleClass('active');					
-	
-			});		        
+				title = this.$titleField;			        
+	        	        
 	        
 			$('.filterize-list-search input').on('change', function(){ 
 			    var filter = $(this).val(),
-			    	list = 	parent.find('ul')
 			    	elNoRes = $(list).find(".filterize-no_results");	   
 
 			    if(filter) {

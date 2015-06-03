@@ -92,8 +92,10 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
 .filterize-list ul > li{
 	color:#6a6a6a;
 	padding:3px 10px;
+	display: block;
 }
-.filterize-list ul > li:hover{
+
+.filterize-list ul > li.selected{
 	color:#000;
 	background: #ecf0f1;
 }
