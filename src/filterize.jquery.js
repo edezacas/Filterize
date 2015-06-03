@@ -83,6 +83,7 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
             this.$element = $(this.element);
             this.$titleField = $(this.element).siblings('.filterize-title');
             this.$list = $(this.element).siblings('.filterize-list');
+            this.$listBox = this.$list.find('ul');
             this.$searchField = this.$list.find('input').first();
             this.$currentListEle = this.getCurrentEle();
             
@@ -149,14 +150,17 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
           switch (stroke){
             //Enter
             case 13:
+                event.preventDefault();
                 this.setSearchValue();
                 break;                
             //KeyUp
             case 38:
+                event.preventDefault();
                 this.setPrevEle();                            
                 break;
             //KeyDown   
             case 40:
+                event.preventDefault();
                 this.setNextEle();
                 break;
               
@@ -204,23 +208,42 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
         
         //Set next element to selected
         setNextEle: function(){
-            this.$currentListEle.removeClass("selected").blur().next().addClass("selected");
-            this.$currentListEle = this.getCurrentEle();
+            var nextEl = this.$currentListEle.removeClass("selected").next();                        
+            this.doSelected(nextEl);
         },
         
         //Set prev element to selected
         setPrevEle: function(){
-            this.$currentListEle.removeClass("selected").blur().prev().addClass("selected");
+            var prevEl = this.$currentListEle.removeClass("selected").prev();
+            this.doSelected(prevEl);
+        },    
+        
+        //Select currentEle and scrollTo
+        doSelected: function(el){
+            var high_bottom, high_top, maxHeight, visible_bottom, visible_top;
+            
+            el.addClass("selected");
             this.$currentListEle = this.getCurrentEle();
-        },        
+                        
+            maxHeight = parseInt(this.$listBox.css("maxHeight"), 10);
+            inputHeight = this.$searchField.outerHeight(true);  
+            visible_top = this.$listBox.scrollTop();
+            visible_bottom = maxHeight + visible_top;            
+            high_top = this.$currentListEle.position().top + this.$listBox.scrollTop() - inputHeight - 10;
+            high_bottom = high_top + this.$currentListEle.outerHeight(true);             
+                                          
+            if (high_bottom >= visible_bottom) {
+              this.$listBox.scrollTop((high_bottom - maxHeight) > 0 ? high_bottom - maxHeight : 0);  
+            } else if (high_top  < visible_top) {              
+              this.$listBox.scrollTop(high_top);
+            }            
+                                          
+        }, 
         
         //Set List Value 
         setSearchValue: function(){
             var val = this.$currentListEle.data("value"),
-                texto = this.$currentListEle.find("p").text();
-            
-            
-            console.log(this.$currentListEle);
+                texto = this.$currentListEle.find("p").text();            
                 
             this.$titleField.text(texto);
             this.$list.slideUp();
