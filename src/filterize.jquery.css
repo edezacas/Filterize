@@ -2,7 +2,7 @@
 Filterize, a jQuery Plugin to filter select list
 by Eduard Deza for Hiringo Team, http://hiringo.com
 
-Version 1.0.0
+Version 1.0.2
 Full source at https://github.com/edezacas/Filterize
 
 MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
