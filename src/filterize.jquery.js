@@ -248,7 +248,8 @@ MIT License, https://github.com/edezacas/Filterize/blob/master/LICENSE.md
             this.$titleField.text(texto);
             this.$list.slideUp();
             
-            this.$element.val(val);
+            //Apply change method because it's hidden
+            this.$element.val(val).change();
             
             //Trigger change event to notify
             this.$element.trigger("change");                   
